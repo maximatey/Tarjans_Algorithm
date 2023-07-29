@@ -12,6 +12,7 @@ import (
 type Node struct {
 	Name     string
 	Neighbor []string
+	UNeigh   []string
 	LowLink  int
 	Index    int
 }
@@ -30,6 +31,7 @@ func NewNode(name string) *Node {
 	return &Node{
 		Name:     name,
 		Neighbor: nil,
+		UNeigh:   nil,
 		LowLink:  -1,
 		Index:    -1,
 	}
@@ -71,14 +73,17 @@ func (g *Graph) AddEdge(from string, to string) {
 	if fromNodeIndex == -1 {
 		fromNode := NewNode(from)
 		fromNode.Neighbor = append(fromNode.Neighbor, to)
+		fromNode.UNeigh = append(fromNode.UNeigh, to)
 		g.Nodes = append(g.Nodes, *fromNode)
 	} else {
 		g.Nodes[fromNodeIndex].Neighbor = append(g.Nodes[fromNodeIndex].Neighbor, to)
+		g.Nodes[fromNodeIndex].UNeigh = append(g.Nodes[fromNodeIndex].UNeigh, to)
 	}
 
 	toNodeIndex := g.getNodeByName(to)
 	if toNodeIndex == -1 {
 		toNode := NewNode(to)
+		toNode.UNeigh = append(toNode.UNeigh, from)
 		g.Nodes = append(g.Nodes, *toNode)
 	}
 }
@@ -203,7 +208,7 @@ func (g *Graph) DFSForBridges(currNode, parentNode string) {
 	g.Visited = append(g.Visited, g.Nodes[nodeIndex].Name)
 	g.Stack = append(g.Stack, g.Nodes[nodeIndex].Name)
 
-	for _, neighbor := range g.Nodes[nodeIndex].Neighbor {
+	for _, neighbor := range g.Nodes[nodeIndex].UNeigh {
 		if neighbor == parentNode {
 			continue
 		}
