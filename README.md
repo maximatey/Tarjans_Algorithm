@@ -76,6 +76,11 @@ Sisi-sisi yang terdeteksi sebagai jembatan akan dicatat dalam atribut "Bridges" 
 
 WASM, HTML, Javascript
 
+## Library Graph
+
+golang.org/x/image v0.9.0
+image
+
 ## Referensi
 
 - [_Tarjan's Algorithm to find Strongly Connected Components_](https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/)
