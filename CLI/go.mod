@@ -1,4 +1,4 @@
-module main
+module github.com/maximatey/Tarjans_Algorithm
 
 go 1.20
 
